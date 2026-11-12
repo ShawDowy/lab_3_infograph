@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>От 8 бит до миллиардов копий — видеоигры в данных, 1980–2015</title>
+    <meta name="description" content="Интерактивный разбор продаж видеоигр за 1980–2015 годы: жанры, платформы и регионы в трёх диаграммах.">
+    <meta name="theme-color" content="#f4f1e9">
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти к содержанию</a>
+
+<header class="site-header" id="top">
+    <div class="wrap header-inner">
+        <a class="brand" href="#top" aria-label="В начало">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="22" height="22" fill="none">
+                    <path d="M5 23V9h4l7 8 7-8h4v14h-4v-7l-7 8-7-8v7H5Z" fill="currentColor"/>
+                </svg>
+            </span>
+            <span><strong>ДАННЫЕ / ИГРЫ</strong><small>визуальный разбор</small></span>
+        </a>
+        <nav class="main-nav" aria-label="Разделы">
+            <a href="#genres">Жанры</a>
+            <a href="#platforms">Платформы</a>
+            <a href="#timeline">Хронология</a>
+            <a href="#top-games">Топ-10</a>
+            <a href="#findings">Выводы</a>
+            <a href="#about">О данных</a>
+        </nav>
+        <a class="source-pill" href="https://www.kaggle.com/datasets/gregorut/videogamesales" target="_blank" rel="noopener">Источник ↗</a>
+    </div>
+</header>
+
+<main id="main">
+    <section class="print-cover" aria-hidden="true">
+        <div class="print-cover-university">
+            <strong>МГТУ «СТАНКИН»</strong>
+            <span>Кафедра прикладной математики</span>
+        </div>
+        <div class="print-cover-middle">
+            <p>Лабораторная работа № 3</p>
+            <h1>ИИ в визуализации данных</h1>
+            <h2>Видеоигры в данных: 1980–2015</h2>
+            <p class="print-cover-sub">Три интерактивные диаграммы по открытому датасету Video Game Sales</p>
+        </div>
+        <div class="print-cover-bottom">
+            <p>Выполнил: Варфоломеев И. А.</p>
+            <p>Группа: ИДМ-26-07</p>
+            <p>Москва, 2026</p>
+        </div>
+    </section>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="wrap hero-grid">
+            <div class="hero-copy">
+                <p class="eyebrow">VIDEO GAME SALES · 1980–2015</p>
+                <h1>От 8 бит до <em>миллиардов копий</em></h1>
+                <p class="hero-lead">Тридцать шесть лет видеоигр в одном наборе данных: как менялись жанры, какие платформы продавали лучше и чем отличаются регионы.</p>
+                <div class="hero-meta">
+                    <span>15 973 релиза</span>
+                    <span>8,75 млрд копий</span>
+                    <span>12 жанров</span>
+                    <span>31 платформа</span>
+                </div>
+            </div>
+            <aside class="hero-panel" aria-label="Ключевые показатели">
+                <div class="hero-panel-head">
+                    <span>Срез данных</span>
+                    <span class="hero-panel-mark">1980—2015</span>
+                </div>
+                <div class="hero-stat">
+                    <strong id="heroSales">8,75 млрд</strong>
+                    <span>суммарные продажи, копии</span>
+                </div>
+                <div class="hero-stat">
+                    <strong id="heroReleases">15 973</strong>
+                    <span>записей о релизах</span>
+                </div>
+                <div class="hero-stat">
+                    <strong id="heroTitles">11 161</strong>
+                    <span>уникальных названий</span>
+                </div>
+                <p class="hero-note">Продажи — в миллионах копий, не в деньгах. 2016 год исключён как неполный.</p>
+            </aside>
+        </div>
+        <div class="hero-grid-bg" aria-hidden="true"></div>
+        <div class="wrap hero-bottom">
+            <span class="hero-rule"></span>
+            <p>Наведите на графики, чтобы увидеть числа. Выберите регион и период — все три диаграммы пересчитаются.</p>
+        </div>
+    </section>
+
+    <!-- FILTERS -->
+    <section class="controls" aria-label="Фильтры данных">
+        <div class="wrap control-inner">
+            <div class="control-group">
+                <label for="regionSelect">Регион</label>
+                <div class="select-wrap">
+                    <select id="regionSelect">
+                        <option value="global">Весь мир</option>
+                        <option value="na">Северная Америка</option>
+                        <option value="eu">Европа</option>
+                        <option value="jp">Япония</option>
+                        <option value="other">Остальной мир</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="periodSelect">Период</label>
+                <div class="select-wrap">
+                    <select id="periodSelect">
+                        <option value="all">1980–2015</option>
+                        <option value="1980s">1980-е</option>
+                        <option value="1990s">1990-е</option>
+                        <option value="2000s">2000-е</option>
+                        <option value="2010s">2010–2015</option>
+                    </select>
+                </div>
+            </div>
+            <button class="reset-btn" id="resetBtn" type="button">Сбросить</button>
+            <div class="control-summary" aria-live="polite">
+                <strong id="selectionSales">8,75 млрд копий</strong>
+                <span id="selectionReleases">15 973 релиза</span>
+            </div>
+            <a class="download-btn" href="data/vgsales_clean.csv" download>Скачать CSV ↓</a>
+        </div>
+    </section>
+
+    <noscript><div class="wrap noscript">Для интерактивных графиков нужен JavaScript.</div></noscript>
+
+    <!-- 01 STREAMGRAPH -->
+    <section class="section" id="genres">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="section-num">01</span>
+                <div>
+                    <p class="eyebrow">Динамика</p>
+                    <h2>Как менялся состав рынка</h2>
+                </div>
+            </div>
+
+            <div class="chart-layout">
+                <aside class="chart-side">
+                    <p class="question-label">Вопрос к данным</p>
+                    <h3>Какие жанры определяли продажи в разные годы?</h3>
+                    <p class="chart-desc">Потоковая диаграмма показывает не только общий объём, но и долю каждого жанра. Чем толще лента, тем больше копий продано в этот год.</p>
+                    <div class="insight" id="streamInsight"></div>
+                    <p class="chart-method">Тип: streamgraph. Ось X — год, толщина ленты — продажи жанра в выбранном регионе.</p>
+                </aside>
+
+                <div class="chart-stage">
+                    <div class="chart-head">
+                        <span id="streamRange">1980–2015</span>
+                        <span class="chart-unit">млн копий</span>
+                    </div>
+                    <div class="chart" id="streamChart" role="img" aria-label="Потоковая диаграмма продаж по жанрам и годам"></div>
+                    <p class="scroll-note">График прокручивается по горизонтали ↔</p>
+                    <div class="chart-foot">
+                        <span>Наведите на год, чтобы увидеть значения всех жанров.</span>
+                        <span id="streamPeak"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 02 SUNBURST -->
+    <section class="section section-tinted" id="platforms">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="section-num">02</span>
+                <div>
+                    <p class="eyebrow">Структура</p>
+                    <h2>Из чего состоит рынок</h2>
+                </div>
+            </div>
+
+            <div class="chart-layout">
+                <aside class="chart-side">
+                    <p class="question-label">Вопрос к данным</p>
+                    <h3>Из каких жанров и семейств платформ складываются продажи?</h3>
+                    <p class="chart-desc">Внутреннее кольцо — жанры. Внешнее — семейства платформ: Nintendo, PlayStation, Xbox, Sega, Atari, PC и другие. Размер сектора пропорционален проданным копиям, а не количеству релизов.</p>
+                    <div class="insight" id="sunburstInsight"></div>
+                    <p class="chart-method">Тип: sunburst. «Смешанные» — категория Misc из датасета; «Остальные жанры» — Симулятор, Головоломка, Приключения и Стратегия. Нажмите или наведите на сектор, чтобы увидеть точное значение.</p>
+                </aside>
+
+                <div class="chart-stage">
+                    <div class="chart-head">
+                        <span id="sunburstTitle">Все жанры</span>
+                        <span class="chart-unit">доля продаж</span>
+                    </div>
+                    <div class="chart sunburst-chart" id="sunburstChart" role="img" aria-label="Диаграмма sunburst: жанры и платформы"></div>
+                    <div class="chart-foot">
+                        <span id="sunburstFoot">Внешнее кольцо — две ведущие платформы жанра; светлая часть — остальные.</span>
+                        <span id="sunburstTotal"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 03 BUBBLE -->
+    <section class="section" id="platforms-bubble">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="section-num">03</span>
+                <div>
+                    <p class="eyebrow">Эффективность</p>
+                    <h2>Много релизов или много продаж?</h2>
+                </div>
+            </div>
+
+            <div class="chart-layout">
+                <aside class="chart-side">
+                    <p class="question-label">Вопрос к данным</p>
+                    <h3>Какие платформы выпускали много игр, а какие — много продавали?</h3>
+                    <p class="chart-desc">По горизонтали — число релизов на платформе, по вертикали — суммарные продажи, размер пузырька — средние продажи на один релиз.</p>
+                    <div class="insight" id="bubbleInsight"></div>
+                    <p class="chart-method">Тип: bubble chart. Обе оси имеют разные масштабы, поэтому сравнение идёт по положению и размеру, а не по площади круга.</p>
+                </aside>
+
+                <div class="chart-stage">
+                    <div class="chart-head">
+                        <span>Платформы</span>
+                        <span class="chart-unit">млн копий / релизы</span>
+                    </div>
+                    <div class="chart" id="bubbleChart" role="img" aria-label="Пузырьковая диаграмма платформ: релизы и продажи"></div>
+                    <p class="scroll-note">График прокручивается по горизонтали ↔</p>
+                    <div class="chart-foot">
+                        <span>Показаны платформы с релизами в выбранном срезе. Подписи — у крупнейших.</span>
+                        <span id="bubbleCount"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEATMAP -->
+    <section class="section" id="timeline">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="section-num">04</span>
+                <div>
+                    <p class="eyebrow">Хронология</p>
+                    <h2>Когда платформы были на пике</h2>
+                </div>
+            </div>
+
+            <div class="chart-layout">
+                <aside class="chart-side">
+                    <p class="question-label">Вопрос к данным</p>
+                    <h3>Когда каждая платформа была на пике?</h3>
+                    <p class="chart-desc">Тепловая карта показывает жизненный цикл платформ: по горизонтали — годы, по вертикали — платформы, насыщенность цвета — продажи. Контур отмечает год пика.</p>
+                    <div class="insight" id="timelineInsight"></div>
+                    <p class="chart-method">Тип: heatmap. Чем темнее клетка, тем больше копий продано. Наведите на клетку, чтобы увидеть точное значение.</p>
+                </aside>
+
+                <div class="chart-stage">
+                    <div class="chart-head">
+                        <span id="timelineRange">1980–2015</span>
+                        <span class="chart-unit">млн копий</span>
+                    </div>
+                    <div class="chart heatmap-chart" id="heatmapChart" role="img" aria-label="Тепловая карта продаж платформ по годам"></div>
+                    <p class="scroll-note">График прокручивается по горизонтали ↔</p>
+                    <div class="heat-scale" id="heatmapScale"></div>
+                    <div class="chart-foot">
+                        <span>Строки — платформы, столбцы — годы. Контур — год пика платформы.</span>
+                        <span id="timelineCount"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOP GAMES -->
+    <section class="section section-tinted" id="top-games">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="section-num">05</span>
+                <div>
+                    <p class="eyebrow">Частные случаи</p>
+                    <h2>Топ-10 игр выбранного среза</h2>
+                </div>
+            </div>
+            <div class="table-card">
+                <table class="top-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Игра</th>
+                            <th>Платформа</th>
+                            <th>Год</th>
+                            <th>Жанр</th>
+                            <th class="num">Продажи</th>
+                        </tr>
+                    </thead>
+                    <tbody id="topGamesBody"></tbody>
+                </table>
+            </div>
+            <p class="table-note">Продажи — в выбранном регионе, млн копий. Если регион «Весь мир», показаны мировые продажи. На узком экране таблицу можно прокрутить по горизонтали.</p>
+        </div>
+    </section>
+
+    <!-- FINDINGS -->
+    <section class="section" id="findings">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="section-num">06</span>
+                <div>
+                    <p class="eyebrow">Коротко</p>
+                    <h2>Что показали данные</h2>
+                </div>
+            </div>
+            <div class="findings-grid">
+                <article class="finding">
+                    <span>01</span>
+                    <h3>Рынок рос волнами</h3>
+                    <p>Пик продаж — <strong>2008 год: 678,9 млн копий</strong>. После 2008 года объём снижается: в 2015 году продажи составили 264,4 млн копий.</p>
+                </article>
+                <article class="finding">
+                    <span>02</span>
+                    <h3>Экшен — глобальный лидер</h3>
+                    <p>На экшен приходится <strong>19,5%</strong> мировых продаж. Но в Японии картина другая: первое место занимает <strong>RPG — 27,3%</strong> региональных продаж.</p>
+                </article>
+                <article class="finding">
+                    <span>03</span>
+                    <h3>PS2 — лидер, но не по отдаче</h3>
+                    <p>PlayStation 2 продала <strong>1,23 млрд копий</strong>, больше всех. При этом лучшие средние продажи на релиз — у <strong>Game Boy</strong> и <strong>NES</strong>: старые платформы жили за счёт нескольких культовых игр.</p>
+                </article>
+            </div>
+            <div class="method-note">
+                <p><strong>Главный вывод:</strong> рынок видеоигр нельзя описывать одним числом. Жанры, платформы и регионы меняются в разном темпе, а лидер по объёму не всегда лидер по эффективности.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section about" id="about">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="section-num">07</span>
+                <div>
+                    <p class="eyebrow">Методика</p>
+                    <h2>Как читать эти данные</h2>
+                </div>
+            </div>
+            <div class="about-grid">
+                <article class="about-card">
+                    <span>01</span>
+                    <h3>Это копии, а не выручка</h3>
+                    <p>Все значения — миллионы проданных копий. Дашборд не оценивает цены, выручку или прибыль издателей.</p>
+                </article>
+                <article class="about-card">
+                    <span>02</span>
+                    <h3>Одна игра — несколько строк</h3>
+                    <p>Если игра выходила на нескольких платформах, каждая версия считается отдельным релизом. 15 973 строки — это не 15 973 уникальные игры.</p>
+                </article>
+                <article class="about-card">
+                    <span>03</span>
+                    <h3>2016 год исключён</h3>
+                    <p>В исходном файле за 2016 год всего 344 записи — год представлен неполно. Чтобы не показывать искусственный обвал, графики заканчиваются 2015 годом. Также удалены 4 записи, где год релиза раньше выхода платформы.</p>
+                </article>
+                <article class="about-card">
+                    <span>04</span>
+                    <h3>Источник и оценки</h3>
+                    <p>Датасет основан на открытых данных Video Game Sales (Kaggle) и оценках VGChartz. Цифры могут отличаться от официальной отчётности.</p>
+                    <a href="https://www.kaggle.com/datasets/gregorut/videogamesales" target="_blank" rel="noopener">Открыть источник ↗</a>
+                </article>
+            </div>
+            <div class="method-note">
+                <p><strong>Почему такие типы:</strong> streamgraph показывает состав целого во времени; sunburst — два уровня иерархии «жанр → семейство платформ»; bubble — три показателя одновременно. Радиальная диаграмма и Sankey не подходят: в данных нет повторяющегося цикла и настоящих переходов между этапами.</p>
+                <p><strong>Как сделано:</strong> данные очищены и агрегированы Python, графики построены на SVG и JavaScript без внешних библиотек. ИИ использовался для подбора вопросов, структуры и кода; числа проверены скриптом.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="wrap footer-inner">
+        <div>
+            <strong>ВИДЕОИГРЫ В ДАННЫХ</strong>
+            <span>Лабораторная работа № 3 · инфографика и визуализация · 2026</span>
+        </div>
+        <div class="footer-links">
+            <a href="https://www.kaggle.com/datasets/gregorut/videogamesales" target="_blank" rel="noopener">Video Game Sales ↗</a>
+            <a href="#top">Наверх ↑</a>
+        </div>
+    </div>
+</footer>
+
+<div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
